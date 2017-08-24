@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>">
+<title>更新网站地图</title>
+<link href="../publics/layui/css/layui.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" class="layui-table">
+  <form name="form1" action="makehtml_map.php" method="get" target='stafrm'>
+ 
+    <tr height="20" bgcolor="#FFFFFF"> 
+      <td width="25%">地图类型：</td>
+      <td>
+      	<input name="dopost" type="radio" id="mdopost" class="np" value="site" checked>
+      	普通地图
+      	&nbsp;
+      	<input name="dopost" type="radio" id="mdopost" class="np" value="rss">
+      	RSS地图
+      </td>
+    </tr>
+    <tr> 
+      <td height="20" colspan="2" bgcolor="#ffffff" align="center">
+      	<input name="b112" type="button" class="layui-btn" value="开始更新" onClick="document.form1.submit();" style="width:120px"> 
+          <?php 
+      		if($cfg_remote_site=='Y')
+      		{
+    	  ?> 　
+             <input name="isremote" type="checkbox" id="isremote" value="1">是否同步远程发发布
+             <?php GetFtp();?>
+          <?php }?>     
+      </td>
+    </tr>
+  </form>
+ 
+  <tr bgcolor="#FFFFFF"> 
+    <td colspan="2" id="mtd">
+    	<div id='mdv' style='width:100%;height:350px;'> 
+        <iframe name="stafrm" frameborder="0" id="stafrm" width="100%" height="100%"></iframe>
+      </div>
+      </td>
+  </tr>
+</table>
+</body>
+</html>

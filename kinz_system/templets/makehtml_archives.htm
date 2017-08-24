@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>">
+<title>生成HTML</title>
+<link href="../publics/layui/css/layui.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" class="layui-table">
+  <form name='form2' action='content_list.php' method="get" target='stafrm'>
+   <input type='hidden' name='nullfield' value='ok'>
+  </form>
+  <form name="form1" action="makehtml_archives_action.php" method="get" target='stafrm'>
+  <tr> 
+    <td height="28" colspan="2">
+          	<a href="makehtml_list.php?typeid=<?php echo (isset($typeid) ? $typeid : 0); ?>" class="layui-btn layui-btn-danger">更新栏目</a>
+        </td>
+  </tr>
+  <tr> 
+    <td width="108" valign="top" bgcolor="#FFFFFF">选择栏目：</td>
+    <td width="377" valign="top" bgcolor="#FFFFFF">
+    <?php
+       if(empty($cid)) $cid="0";
+       $tl = new TypeLink($cid);
+       $typeOptions = $tl->GetOptionArray($cid,$admin_catalogs,0);
+       echo "<select name='typeid' class='layui-input' style='width:200px'>\r\n";
+       if($cid=="0") echo "<option value='0' selected>更新所有文档</option>\r\n";
+       echo $typeOptions;
+       echo "</select>";
+		?>
+   </td>
+  </tr>
+  <tr>
+    <td height="20" valign="top" bgcolor="#FFFFFF">起始ID：</td>
+    <td height="20" valign="top" bgcolor="#FFFFFF"><input name="startid" class="layui-input" style='width:200px' type="text" id="startid" size="10">
+      <div class="layui-form-mid layui-word-aux">（空或0表示从头开始）</div></td>
+  </tr>
+  <tr> 
+    <td height="20" valign="top" bgcolor="#FFFFFF">结束ID：</td>
+    <td height="20" valign="top" bgcolor="#FFFFFF"><input name="endid"class="layui-input" style='width:200px' type="text" id="endid" size="10">
+     <div class="layui-form-mid layui-word-aux">  （空或0表示直到结束ID）</div> </td>
+  </tr>
+    <tr> 
+      <td height="20" bgcolor="#FFFFFF">每页生成：</td>
+      <td height="20" bgcolor="#FFFFFF"> <input name="pagesize" class="layui-input" style='width:200px' type="text" id="pagesize" value="20" size="8">
+       <div class="layui-form-mid layui-word-aux">  个文件</div></td>
+    </tr>
+    <tr> 
+      <td height="20" colspan="2" bgcolor="#ffffff" align="center">
+      	<input name="b112" type="button" class="layui-btn" value="开始生成页面" onClick="document.form1.submit();" style="width:100">  <?php 
+      if($cfg_remote_site=='Y')
+      {
+    ?>    
+     <input name="isremote" type="checkbox" id="isremote" value="1">
+是否同步远程发布到     
+      <?php GetFtp();?>
+      <?php
+      }
+    ?>  
+        &nbsp;
+      <input type="button" name="b113" value="查看所有文档"  class="layui-btn layui-btn-danger" onClick="document.form2.submit();" style="width:100"></td>
+    </tr>
+  </form>
+ 
+  <tr bgcolor="#FFFFFF"> 
+    <td colspan="2" id="mtd">
+    	<div id='mdv' style='width:100%;height:350px;'> 
+        <iframe name="stafrm" frameborder="0" id="stafrm" width="100%" height="100%"></iframe>
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
